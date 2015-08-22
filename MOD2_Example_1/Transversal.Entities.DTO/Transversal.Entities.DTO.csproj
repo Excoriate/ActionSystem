@@ -4,17 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2FA44A73-6F90-4FDA-9959-5F4AE4619E3B}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{0646AACF-5A05-4131-8E18-B123F6BA8742}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Windows.UX.Console</RootNamespace>
-    <AssemblyName>Windows.UX.Console</AssemblyName>
+    <RootNamespace>Transversal.Entities.DTO</RootNamespace>
+    <AssemblyName>Transversal.Entities.DTO</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -43,21 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="DTO\PersonDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Backend.Business\Backend.Business.csproj">
-      <Project>{5a161ac2-7a7a-4f0d-9118-a3efb2904884}</Project>
-      <Name>Backend.Business</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Transversal.Entities.DTO\Transversal.Entities.DTO.csproj">
-      <Project>{0646aacf-5a05-4131-8e18-b123f6ba8742}</Project>
-      <Name>Transversal.Entities.DTO</Name>
-    </ProjectReference>
+    <Folder Include="ValueObjects\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
