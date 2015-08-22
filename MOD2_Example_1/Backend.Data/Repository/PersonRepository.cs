@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Backend.Data.Contracts;
 using Transversal.Entities.DTO.DTO;
 
@@ -12,7 +13,7 @@ namespace Backend.Data.Repository
         /// </summary>
         /// <param name="lastName"></param>
         /// <returns></returns>
-        PersonDto IPersonRepository.GetPersonByLastName(string lastName)
+        public PersonDto GetPersonByLastName(string lastName)
         {
             var resultObject = default(PersonDto);
 
@@ -20,20 +21,32 @@ namespace Backend.Data.Repository
             {
                 var auxAllRecords = GetAllPersons();
 
+                //if(!auxAllRecords.Equals(default(object)))
                 if (!auxAllRecords.Equals(default(List<PersonDto>)))
                 {
-                    foreach (var item in auxAllRecords)
+                    //if (!auxAllRecords.Count.Equals(default(int)))
+                    //{
+                    //    //algo
+                    //    if (!auxAllRecords.Count.Equals(0))
+                    //    {
+                            
+                    //    }
+                    //}
+                    if (auxAllRecords.Any())
                     {
-                        //AT: Se utiliza el método de cla clase String, se compara además ignorando
-                        //case y valores relativos a la cultura. 
-                        if (string.Equals(lastName, item.LastName, StringComparison.InvariantCultureIgnoreCase))
+                        foreach (var item in auxAllRecords)
                         {
-                            resultObject = item;
-                            break;
+                            //AT: Se utiliza el método de cla clase String, se compara además ignorando
+                            //case y valores relativos a la cultura. 
+                            if (string.Equals(lastName, item.LastName, 
+                                StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                resultObject = item;
+                                break;
+                            }
                         }
+
                     }
-
-
                 }
             }
 
@@ -51,7 +64,7 @@ namespace Backend.Data.Repository
 
             //AT: Se comprueba de manera eficiente que el valor parametrizado
             //sea distinto del valor por defecto del primitivo int32
-            if (numeric.Equals(default(int)))
+            if (!numeric.Equals(default(int)))
             {
                 var auxAllRecords = GetAllPersons();
 
@@ -90,6 +103,21 @@ namespace Backend.Data.Repository
             //ATR: Creando nuevas instancias del objeto DTO PersonDto. 
             //Se pretende simular la recepción de éstos datos desde alguna fuente de datos. 
 
+
+            //ATR: Otras formas de inicializar objetos e instanciar.
+            //var objExample = new PersonDto();
+            //PersonDto objExample2 = new PersonDto();  
+            //objExample2.LastName = string.Empty;
+
+            //List<PersonDto> objNadaQueVer = new List<PersonDto>();
+            //List<PersonDto> resultCollection = new List<PersonDto>();
+
+            //foreach (var item in objNadaQueVer.Where(x=> !object.ReferenceEquals(x, null)))
+            //{
+            //    resultCollection.Add(item);
+            //}
+
+
             var objPerson1 = new PersonDto()
             {
                 LastName = "testLastname1",
@@ -118,6 +146,9 @@ namespace Backend.Data.Repository
             //Se utiliza un inicializado de colecciones.- 
             allRecords = new List<PersonDto>
                 () { objPerson1, objPerson2, objPerson3 };
+
+            //var algo = new List<PersonDto>();
+            //algo.Add(objPerson1);
 
             return allRecords;
 

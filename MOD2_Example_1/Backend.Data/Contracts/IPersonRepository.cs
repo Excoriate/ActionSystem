@@ -16,6 +16,7 @@ namespace Backend.Data.Contracts
         PersonDto GetPersonByLastName(string lastName);
         PersonDto GetPersonByRutNumeric(int numeric);
         List<PersonDto> GetAllPersons();
+        
 
     }
 }

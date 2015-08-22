@@ -14,5 +14,6 @@ namespace Transversal.Entities.DTO.DTO
         public string RutDiv { get; set; }
 
 
+
     }
 }

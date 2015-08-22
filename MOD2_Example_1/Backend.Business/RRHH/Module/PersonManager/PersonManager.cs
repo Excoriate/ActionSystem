@@ -21,13 +21,26 @@ namespace Backend.Business.RRHH.Module.PersonManager
             //var instanceOf = default(IPersonRepository);
             var instanceIoc = new InjectorIoC(new PersonRepository());
             return instanceIoc.GetInjectedInstanceOfPersonRepository();
-            
         }
 
 
+        /// <summary>
+        /// AT: Instancia inyectada de forma asistida via constructor de la clase.
+        /// </summary>
+        /// <returns></returns>
         public  List<PersonDto>GetAllPersons()
         {
             return GetRepositoryInstance().GetAllPersons();  
+        }
+
+        /// <summary>
+        /// AT:  Instancia inyectada de forma asistida via constructor de la clase.
+        /// </summary>
+        /// <param name="numeric"></param>
+        /// <returns></returns>
+        public PersonDto GetPersonByNumeric(int numeric)
+        {
+            return GetRepositoryInstance().GetPersonByRutNumeric(numeric);
         }
 
     }
