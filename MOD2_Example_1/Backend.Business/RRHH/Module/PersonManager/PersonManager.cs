@@ -43,5 +43,71 @@ namespace Backend.Business.RRHH.Module.PersonManager
             return GetRepositoryInstance().GetPersonByRutNumeric(numeric);
         }
 
-    }
+        /// <summary>
+        /// AT: Obtiene una persona por su apellido. 
+        /// </summary>
+        /// <param name="lastName"></param>
+        /// <returns></returns>
+        public PersonDto GetPersonByLastName(string lastName)
+        {
+            return GetRepositoryInstance().GetPersonByLastName(lastName);
+        }
+
+        /// <summary>
+        /// AT: Agrega una nueva instancia de Persona Dto. 
+        /// </summary>
+        /// <param name="objPersonDto"></param>
+        /// <returns></returns>
+        public List<PersonDto> InsertNewPerson(PersonDto objPersonDto)
+        {
+            //AT: Acá se debería de modificar, considerando que siempre trae la coleccion
+            //seteada en "duro" desde Persistencia.
+            return GetRepositoryInstance().AddNewPerson(objPersonDto);
+        }
+
+        /// <summary>
+        /// AT: Actualiza una entidad existente de la coleccion de Personas.
+        /// </summary>
+        /// <param name="objPersonDto"></param>
+        /// <returns></returns>
+        public List<PersonDto> UpdatePerson(PersonDto objDto , List<PersonDto> currentListOfPerson)
+        {
+            var resultUpdateCollection = default(List<PersonDto>);
+            var auxCollection          = default(List<PersonDto>);
+
+            if (!object.ReferenceEquals(objDto, null))
+            {
+                auxCollection = object.ReferenceEquals(currentListOfPerson, null) ?
+                    GetRepositoryInstance().GetAllPersons() : currentListOfPerson;
+
+                foreach (var item in auxCollection)
+                {  
+                    if (string.Equals(item.RutDiv, objDto.RutDiv, StringComparison.InvariantCultureIgnoreCase) &&
+                        (item.RutNumeric.Equals(objDto.RutNumeric)))
+                    {
+                        auxCollection.Remove(item);
+                        auxCollection.Add(objDto);
+                        break; 
+                    }
+                }   
+            }
+
+            return auxCollection;
+        }
+
+        /// <summary>
+        /// AT: Remueve una instancia de PersonDto desde memoria. Retorna la colección
+        /// actualizada. 
+        /// </summary>
+        /// <param name="objPersonDto"></param>
+        /// <returns></returns>
+        public List<PersonDto> RemovePerson(PersonDto objPersonDto)
+        {
+            return GetRepositoryInstance().DeletePerson(objPersonDto);
+
+        }
+
+
+
+}
 }

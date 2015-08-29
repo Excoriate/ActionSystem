@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using Backend.Data.Contracts;
 using Transversal.Entities.DTO.DTO;
 
@@ -154,6 +155,94 @@ namespace Backend.Data.Repository
 
         }
 
+        /// <summary>
+        /// ATR -  27/08/2015 Inserta una nueva entidad en memoria. 
+        /// </summary>
+        /// <param name="objDto"></param>
+        /// <returns></returns>
+        public List<PersonDto> AddNewPerson(PersonDto objDto)
+        {
+            var auxAllRecords = GetAllPersons();
 
+            if (!object.ReferenceEquals(objDto, null))
+            {
+                auxAllRecords.Add(objDto);
+            }
+            return auxAllRecords;
+        }
+
+        /// <summary>
+        /// ATR -  27/08/2015 - Actualiza una entidad previa existente. 
+        /// </summary>
+        /// <param name="objDto"></param>
+        /// <returns></returns>
+        public List<PersonDto> UpdateNewPerson(PersonDto objDto)
+        {
+            var auxAllPersons = default(List<PersonDto>);
+
+            if (!objDto.Equals(default(PersonDto)))
+            {
+                auxAllPersons = GetAllPersons();
+
+                if (!object.ReferenceEquals(auxAllPersons, null))
+                {
+                    if (auxAllPersons.Any())
+                    {
+                        var searchedPerson = default(PersonDto);
+
+                        //ATR: Por ahora no usaremos LinqToEntities. 
+                        foreach (var item in auxAllPersons)
+                        {
+                            if ( string.Equals(item.RutDiv, objDto.RutDiv, StringComparison.InvariantCultureIgnoreCase) &&
+                                (item.RutNumeric.Equals(objDto.RutNumeric))) 
+
+                                auxAllPersons.Remove(item);
+                                auxAllPersons.Add(objDto);
+                                break;
+                            }   
+                        }  
+
+                    }
+                }
+
+            return auxAllPersons;
+
+        }
+
+        /// <summary>
+        /// AT: Remueve una persona desde la coleccion en memoria existente. 
+        /// </summary>
+        /// <param name="objDto"></param>
+        /// <returns></returns>
+        public List<PersonDto> DeletePerson(PersonDto objDto)
+        {
+            List<PersonDto> resultCollection = default(List<PersonDto>);
+
+            if (!object.ReferenceEquals(objDto, null))
+            {   
+                var auxAllPersons = GetAllPersons();
+
+                if (!object.ReferenceEquals(auxAllPersons, null) && (auxAllPersons.Any()))
+                {
+                    foreach (var person in auxAllPersons)
+                    {
+                        if (person.RutNumeric.Equals(objDto.RutNumeric)
+                            && string.Equals(person.RutDiv, objDto.RutDiv, StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            if(auxAllPersons.Remove(person)      )
+                            {
+                                resultCollection = auxAllPersons;
+                            }                                     
+                            break;
+                        }
+                    } 
+                }
+
+            }
+
+            return resultCollection;
+
+        } 
+        
     }
 }
