@@ -194,6 +194,13 @@ namespace Windows.UX.Console
                         ShowPersonsFromBusienss();
                     }
                 }
+                else
+                {
+                
+                    System.Console.WriteLine("Persona ya existe.");
+                    System.Console.WriteLine("\n");
+
+                }
 
             }
 

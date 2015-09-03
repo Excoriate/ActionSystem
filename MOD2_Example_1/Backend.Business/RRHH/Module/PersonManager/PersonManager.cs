@@ -83,8 +83,17 @@ namespace Backend.Business.RRHH.Module.PersonManager
             {
                 if (!object.ReferenceEquals(lstOfPersons, null) && lstOfPersons.Any())
                 {
-                    lstOfPersons.Add(objPersonDto);
-                    lstOfPersonReturned = lstOfPersons;
+                    //Validacion usuario existente.
+                    var auxExistUser = lstOfPersons.SingleOrDefault
+                        (x => string.Equals(x.RutDiv, objPersonDto.RutDiv)
+                              && (x.RutNumeric.Equals(objPersonDto.RutNumeric)));
+
+                    if (object.ReferenceEquals(auxExistUser, null))
+                    {
+                        lstOfPersons.Add(objPersonDto);
+                        lstOfPersonReturned = lstOfPersons;
+
+                    }
                 }
                 else
                 {
