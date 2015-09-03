@@ -1,9 +1,7 @@
 ﻿
-using System.Collections.Generic;
-using System.Globalization;
+using System.Collections.Generic; 
 using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
 using Windows.UX.Console.Application.ConfigManager;
 using Backend.Business.RRHH.Module.PersonManager;
 using Transversal.Entities.DTO.DTO;
@@ -21,13 +19,16 @@ namespace Windows.UX.Console
 
             //AT: Display main menu, check previously custom input types! (prevent FormatException). 
             ShowCustomMenu();
+            //Regex.IsMatch(tuCadena, @"^[\p{L}]+$");
 
 
         }
+        
+    
 
         static void ShowCustomMenu()
         {
-            var startValue = int.MinValue;
+            var startValue = 0;
 
             System.Console.WriteLine("---------MENU---------");
             System.Console.WriteLine();
@@ -180,7 +181,7 @@ namespace Windows.UX.Console
                     LastName   = lastNameOf,
                     RutNumeric = resultRutNumericOf,
                     RutDiv     = rutDvOf
-                });
+                }, lstOfPersonOnMemory);
 
                 if (!object.ReferenceEquals(resultListWithNewPerson, null))
                 {
@@ -312,7 +313,7 @@ namespace Windows.UX.Console
                     }
                     else
                     {
-                        findedPerson = personManagerInstance.GetPersonByLastName(lastNameByConsole); 
+                        findedPerson = personManagerInstance.GetPersonByLastName(lastNameByConsole, lstOfPersonOnMemory); 
                     }
                 }
             }

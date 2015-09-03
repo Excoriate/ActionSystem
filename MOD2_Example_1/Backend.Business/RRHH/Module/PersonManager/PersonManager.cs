@@ -48,9 +48,25 @@ namespace Backend.Business.RRHH.Module.PersonManager
         /// </summary>
         /// <param name="lastName"></param>
         /// <returns></returns>
-        public PersonDto GetPersonByLastName(string lastName)
+        public PersonDto GetPersonByLastName(string lastName, List<PersonDto> updatedList )
         {
-            return GetRepositoryInstance().GetPersonByLastName(lastName);
+            var result = default(PersonDto);
+
+            if (!object.ReferenceEquals(updatedList, null) && updatedList.Any())
+            {
+                foreach(var item in updatedList)
+                {
+                    if (string.Equals(item.LastName, lastName, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        result = item;
+                        break;
+                    }
+                    
+                }
+            }
+
+            return result;
+
         }
 
         /// <summary>
@@ -58,11 +74,26 @@ namespace Backend.Business.RRHH.Module.PersonManager
         /// </summary>
         /// <param name="objPersonDto"></param>
         /// <returns></returns>
-        public List<PersonDto> InsertNewPerson(PersonDto objPersonDto)
+        public List<PersonDto> InsertNewPerson(PersonDto objPersonDto, List<PersonDto> lstOfPersons )
         {
+            var lstOfPersonReturned = default(List<PersonDto>);
             //AT: Acá se debería de modificar, considerando que siempre trae la coleccion
             //seteada en "duro" desde Persistencia.
-            return GetRepositoryInstance().AddNewPerson(objPersonDto);
+            if (!object.ReferenceEquals(objPersonDto, null))
+            {
+                if (!object.ReferenceEquals(lstOfPersons, null) && lstOfPersons.Any())
+                {
+                    lstOfPersons.Add(objPersonDto);
+                    lstOfPersonReturned = lstOfPersons;
+                }
+                else
+                {
+                    lstOfPersonReturned = GetRepositoryInstance().AddNewPerson(objPersonDto);
+                }
+
+            }
+
+            return lstOfPersonReturned;
         }
 
         /// <summary>
